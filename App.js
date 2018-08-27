@@ -26,8 +26,7 @@ import Service from './app/pages/account/service';
 import Contact from './app/pages/account/contact';
 
 const StackOptions = ({navigation}) => {
-    let {state,goBack} = navigation;
-
+    let {state,goBack} = navigation;    
     // 用来判断是否隐藏或显示header
     const visible= state.params.isVisible;
     let header;

@@ -24,13 +24,13 @@ function px2dp(px) {
 
 export default class Main extends Component {
   state= {
-    selectedTab: 'discover'
-    // selectedTab: 'account'
+    selectedTab: 'subject'
   };
 
   constructor(props) {
-    super(props);
-
+    super(props);    
+    let w= px2dp(22);
+    console.log(`deviceW=${deviceW}w=${w}`)
   }
 
   render() {
@@ -41,10 +41,13 @@ export default class Main extends Component {
           title="发现"
           selectedTitleStyle={styles.selectedTitle}
           renderIcon={() => <Icon name="bolt" size={px2dp(22)} color={Colors.tabbar} />}
-          renderSelectedIcon={() => <Icon name="bolt" size={px2dp(22)} color={Colors.highlight} />}
-          //badgeText="1"
-          onPress={() => this.setState({selectedTab: 'discover'})}>
-          <Discover navigation={this.props.navigation} main={this}/>
+          renderSelectedIcon={() => <Icon name="bolt" size={px2dp(22)} color={Colors.highlight} />}          
+          onPress={() => {
+            console.log(`faxian`);
+            this.setState({selectedTab: 'discover'})
+          }}>
+          <Discover navigation={this.props.navigation}/>
+          {/* <Text>G</Text> */}
         </TabNavigator.Item>
         <TabNavigator.Item
             selected={this.state.selectedTab === 'subject'}
@@ -52,8 +55,11 @@ export default class Main extends Component {
             selectedTitleStyle={styles.selectedTitle}
             renderIcon={() => <Icon name="film" size={px2dp(22)} color={Colors.tabbar} />}
             renderSelectedIcon={() => <Icon name="film" size={px2dp(22)} color={Colors.highlight} />}
-            onPress={() => this.setState({selectedTab: 'subject'})}>
-          <Subject navigation={this.props.navigation}/>
+            onPress={() => {
+              console.log(`zhuanlan`);
+              this.setState({selectedTab: 'subject'})
+            }}>
+          <Subject navigation={this.props.navigation}/>          
         </TabNavigator.Item>
         <TabNavigator.Item
           selected={this.state.selectedTab === 'account'}
@@ -61,11 +67,16 @@ export default class Main extends Component {
           selectedTitleStyle={styles.selectedTitle}
           renderIcon={() => <Icon name="user" size={px2dp(22)} color={Colors.tabbar} />}
           renderSelectedIcon={() => <Icon name="user" size={px2dp(22)} color={Colors.highlight} />}
-          onPress={() => this.setState({selectedTab: 'account'})}>
-          <Account navigation={this.props.navigation}/>
+          onPress={() => {
+            let i=0;
+            console.log(i+1);
+            this.setState({selectedTab: 'account'})
+          }}>
+          <Account navigation={this.props.navigation}/>          
         </TabNavigator.Item>
       </TabNavigator>
-    );
+    
+  );
   }
 }
 

@@ -29,7 +29,7 @@ import Common from '../../utils/Common';
 import DiscoverNews from './discoverNews';
 
 const deviceW = Dimensions.get('window').width;
-const bannerHeight = deviceW*319/671;
+const bannerHeight = deviceW * 319 / 671;
 const BANNER_IMGS = [];
 let bannerImgs = [];
 const len = 160;
@@ -37,14 +37,13 @@ const subjectWidth = 300;
 const mallWidth = 100;
 const microWidth = 100; // 微课
 const hotWidth = 150;
-const hotHeight = hotWidth*156/292;
+const hotHeight = hotWidth * 156 / 292;
 
 export default class Discover extends React.Component {
     static navigationOptions = {
         title: '发现',
         isVisible: true
     };
-
     // 构造
     constructor(props) {
         super(props);
@@ -84,9 +83,9 @@ export default class Discover extends React.Component {
             <TouchableWithoutFeedback
                 style={styles.banner}
                 onPress={() => this._onBannerClick(data, pageID)}>
-                    <Image
-                        source={{uri : Common.baseUrl + data.icon}}
-                        style={styles.page} />
+                <Image
+                    source={{ uri: Common.baseUrl + data.icon }}
+                    style={styles.page} />
             </TouchableWithoutFeedback>
         );
     }
@@ -98,37 +97,37 @@ export default class Discover extends React.Component {
     // type: 2 subjects:精品专栏 3 courses:视频课程 4 mall:极客商城 5 microclass:精品微课 6 hots:热点专题 7 videos:二叉树视频
     _onItemClick(type, id) {
         const { navigate } = this.props.navigation;
-        switch(type) {
+        switch (type) {
             case 2:
             case 5:
-                navigate("SubjectDetail", {id: id, type: type});
+                navigate("SubjectDetail", { id: id, type: type });
                 break;
             case 3:
-                navigate("CourseDetail", {id: id, type: type});
+                navigate("CourseDetail", { id: id, type: type });
                 break;
             case 4:
                 break;
             case 6:
                 break;
             case 7:
-                break;    
+                break;
             default:
-                break;    
+                break;
         }
     }
 
-    refreshing(){
-        
+    refreshing() {
+
     }
 
-    _onload(){
-        
+    _onload() {
+
     }
 
     _renderItem = (item) => {
         let data = item.item;
-        for (let i=0; i<data.contents.length; i++) {
-            data.contents[i].key = '' + (i+1);
+        for (let i = 0; i < data.contents.length; i++) {
+            data.contents[i].key = '' + (i + 1);
         }
         // news:极客新闻 subjects:精品专栏 courses:视频课程 mall:极客商城 microclass:精品微课 hots:热点专题 videos:二叉树视频
         // 对应类型type分别为1~7
@@ -140,13 +139,13 @@ export default class Discover extends React.Component {
             case 3:
                 return this._renderCourses(data);
             case 4:
-               return this._renderMall(data);
+                return this._renderMall(data);
             case 5:
-               return this._renderMicroclass(data);
+                return this._renderMicroclass(data);
             case 6:
-               return this._renderHots(data);
+                return this._renderHots(data);
             case 7:
-               return this._renderVideos(data);         
+                return this._renderVideos(data);
         }
     }
 
@@ -156,16 +155,16 @@ export default class Discover extends React.Component {
         return (
             <View style={styles.titleBar}>
                 <Text style={styles.title}>{item.title}</Text>
-                <Button text={btnTxt} onPress={()=>this._viewAll(item)} style={styles.viewAll}></Button>
+                <Button text={btnTxt} onPress={() => this._viewAll(item)} style={styles.viewAll}></Button>
             </View>
         );
     }
 
-    _renderNews = (item) => {        
+    _renderNews = (item) => {
         return (
             <View style={styles.contents}>
                 {this._getTitleBar(item)}
-                <DiscoverNews item={item} />                
+                <DiscoverNews item={item} />
             </View>
         );
     }
@@ -174,13 +173,13 @@ export default class Discover extends React.Component {
         return (
             <View style={styles.contents}>
                 {this._getTitleBar(item)}
-                <FlatList 
+                <FlatList
                     style={styles.list}
                     renderItem={this._renderSubjectItem}
                     onRefresh={this.refreshing}
                     refreshing={false}
                     horizontal={true}
-                    showsHorizontalScrollIndicator={false}                
+                    showsHorizontalScrollIndicator={false}
                     data={item.contents}>
                 </FlatList>
             </View>
@@ -190,25 +189,25 @@ export default class Discover extends React.Component {
     _renderSubjectItem = (item) => {
         let rowData = item.item;
         return (
-            <TouchableWithoutFeedback onPress={()=>{this._onItemClick(2, rowData.id)}}>
+            <TouchableWithoutFeedback onPress={() => { this._onItemClick(2, rowData.id) }}>
                 <View style={styles.subjectItem}>
-                    <Image resizeMode={'stretch'} source={{uri:Common.baseUrl + rowData.icon}}
-                           style={styles.subjectImg}/>
+                    <Image resizeMode={'stretch'} source={{ uri: Common.baseUrl + rowData.icon }}
+                        style={styles.subjectImg} />
                     <View style={styles.subjectMask}></View>
                     <Text numberOfLines={2} style={styles.subjectTitle}>{rowData.title}</Text>
                     <View style={styles.subjectInfo}>
-                       <Text style={[styles.name, styles.subjectName]}>{rowData.name}</Text>
-                       <Text style={[styles.cost, styles.subjectCost]}>￠ {rowData.cost} / {rowData.periods}期</Text> 
+                        <Text style={[styles.name, styles.subjectName]}>{rowData.name}</Text>
+                        <Text style={[styles.cost, styles.subjectCost]}>￠ {rowData.cost} / {rowData.periods}期</Text>
                     </View>
                     <Text numberOfLines={2} style={styles.description}>{rowData.description}</Text>
                     <View style={styles.subjectAuthor}>
-                        <Image resizeMode={'stretch'} source={{uri:Common.baseUrl + rowData.avatar_image}}
-                               style={styles.avatarImage}/>
-                       <Text style={styles.authorName}>{rowData.author}</Text>
-                       <Text style={styles.authorHonor}> | {rowData.honor}</Text> 
+                        <Image resizeMode={'stretch'} source={{ uri: Common.baseUrl + rowData.avatar_image }}
+                            style={styles.avatarImage} />
+                        <Text style={styles.authorName}>{rowData.author}</Text>
+                        <Text style={styles.authorHonor}> | {rowData.honor}</Text>
                     </View>
                 </View>
-                
+
             </TouchableWithoutFeedback>
         );
     }
@@ -217,11 +216,11 @@ export default class Discover extends React.Component {
         return (
             <View style={styles.contents}>
                 {this._getTitleBar(item)}
-                <FlatList 
+                <FlatList
                     style={styles.list}
                     renderItem={this._renderCourseItem}
                     onRefresh={this.refreshing}
-                    refreshing={false}                    
+                    refreshing={false}
                     data={item.contents}>
                 </FlatList>
             </View>
@@ -231,24 +230,24 @@ export default class Discover extends React.Component {
     _renderCourseItem = (item) => {
         let rowData = item.item;
         return (
-            <TouchableWithoutFeedback onPress={()=>{this._onItemClick(3, rowData.id)}}>
+            <TouchableWithoutFeedback onPress={() => { this._onItemClick(3, rowData.id) }}>
                 <View style={styles.courseItem}>
-                    <Image resizeMode={'stretch'} source={{uri:Common.baseUrl + rowData.icon}}
-                           style={styles.courseImg}/>
+                    <Image resizeMode={'stretch'} source={{ uri: Common.baseUrl + rowData.icon }}
+                        style={styles.courseImg} />
                     <View style={styles.courseInfo}>
-                        <Text style={styles.name}>{rowData.name}</Text>                    
+                        <Text style={styles.name}>{rowData.name}</Text>
                         <Text numberOfLines={2} style={styles.description}>{rowData.description}</Text>
                         <View style={styles.authorInfo}>
-                           <Text style={[styles.authorName, {color: '#828282'}]}>{rowData.author}</Text>
-                           <Text style={styles.authorHonor}> | {rowData.honor}</Text> 
+                            <Text style={[styles.authorName, { color: '#828282' }]}>{rowData.author}</Text>
+                            <Text style={styles.authorHonor}> | {rowData.honor}</Text>
                         </View>
                         <View style={styles.courseBottom}>
-                            <Text style={styles.period}>{rowData.period}课时 · 约 {rowData.times}分钟</Text> 
-                            <Text style={[styles.cost, {marginTop: 20}]}>￠ {rowData.cost}</Text> 
+                            <Text style={styles.period}>{rowData.period}课时 · 约 {rowData.times}分钟</Text>
+                            <Text style={[styles.cost, { marginTop: 20 }]}>￠ {rowData.cost}</Text>
                         </View>
                     </View>
                 </View>
-                
+
             </TouchableWithoutFeedback>
         );
     }
@@ -257,13 +256,13 @@ export default class Discover extends React.Component {
         return (
             <View style={styles.contents}>
                 {this._getTitleBar(item)}
-                <FlatList 
+                <FlatList
                     style={styles.list}
                     renderItem={this._renderMallItem}
                     onRefresh={this.refreshing}
                     refreshing={false}
                     horizontal={true}
-                    showsHorizontalScrollIndicator={false}                    
+                    showsHorizontalScrollIndicator={false}
                     data={item.contents}>
                 </FlatList>
             </View>
@@ -273,16 +272,16 @@ export default class Discover extends React.Component {
     _renderMallItem = (item) => {
         let rowData = item.item;
         return (
-            <TouchableWithoutFeedback onPress={()=>{this._onItemClick(4, rowData.id)}}>
+            <TouchableWithoutFeedback onPress={() => { this._onItemClick(4, rowData.id) }}>
                 <View style={styles.item}>
                     <View style={styles.mallBox}>
-                        <Image resizeMode={'stretch'} source={{uri: Common.baseUrl + rowData.icon}}
-                               style={styles.mallImg}/>
+                        <Image resizeMode={'stretch'} source={{ uri: Common.baseUrl + rowData.icon }}
+                            style={styles.mallImg} />
                     </View>
                     <Text numberOfLines={2} style={[styles.name, styles.mallName]}>{rowData.description}</Text>
-                    <Text style={styles.cost}>¥ {rowData.cost}</Text> 
+                    <Text style={styles.cost}>¥ {rowData.cost}</Text>
                 </View>
-                
+
             </TouchableWithoutFeedback>
         );
     }
@@ -291,12 +290,12 @@ export default class Discover extends React.Component {
         return (
             <View style={styles.contents}>
                 {this._getTitleBar(item)}
-                <FlatList 
+                <FlatList
                     style={styles.list}
                     renderItem={this._renderMicroclassItem}
                     onRefresh={this.refreshing}
                     refreshing={false}
-                    showsHorizontalScrollIndicator={false}                    
+                    showsHorizontalScrollIndicator={false}
                     data={item.contents}>
                 </FlatList>
             </View>
@@ -306,21 +305,21 @@ export default class Discover extends React.Component {
     _renderMicroclassItem = (item) => {
         let rowData = item.item;
         return (
-            <TouchableWithoutFeedback onPress={()=>{this._onItemClick(5, rowData.id)}}>
+            <TouchableWithoutFeedback onPress={() => { this._onItemClick(5, rowData.id) }}>
                 <View style={styles.courseItem}>
-                    <Image resizeMode={'stretch'} source={{uri: Common.baseUrl + rowData.icon}}
-                           style={styles.microImg}/>
-                    <View style={{marginLeft: 10}}>
-                        <Text style={styles.name}>{rowData.name}</Text>                    
+                    <Image resizeMode={'stretch'} source={{ uri: Common.baseUrl + rowData.icon }}
+                        style={styles.microImg} />
+                    <View style={{ marginLeft: 10 }}>
+                        <Text style={styles.name}>{rowData.name}</Text>
                         <Text numberOfLines={2} style={styles.description}>{rowData.description}</Text>
-                        
+
                         <View style={styles.microBottom}>
-                            <Text style={styles.period}>共{rowData.period}篇文章</Text> 
-                            <Text style={[styles.cost, {marginTop: 20}]}>￠ {rowData.cost}</Text> 
+                            <Text style={styles.period}>共{rowData.period}篇文章</Text>
+                            <Text style={[styles.cost, { marginTop: 20 }]}>￠ {rowData.cost}</Text>
                         </View>
                     </View>
                 </View>
-                
+
             </TouchableWithoutFeedback>
         );
     }
@@ -329,13 +328,13 @@ export default class Discover extends React.Component {
         return (
             <View style={styles.contents}>
                 {this._getTitleBar(item)}
-                <FlatList 
+                <FlatList
                     style={styles.list}
                     renderItem={this._renderHotItem}
                     onRefresh={this.refreshing}
                     refreshing={false}
                     horizontal={true}
-                    showsHorizontalScrollIndicator={false}                    
+                    showsHorizontalScrollIndicator={false}
                     data={item.contents}>
                 </FlatList>
             </View>
@@ -345,13 +344,13 @@ export default class Discover extends React.Component {
     _renderHotItem = (item) => {
         let rowData = item.item;
         return (
-            <TouchableWithoutFeedback onPress={()=>{this._onItemClick(6, rowData.id)}}>
+            <TouchableWithoutFeedback onPress={() => { this._onItemClick(6, rowData.id) }}>
                 <View style={styles.hotItem}>
                     <Image resizeMode={'stretch'} source={require('../../images/hot/1.jpg')}
-                           style={styles.hotImg}/>
-                    <Text numberOfLines={2} style={styles.subjectTitle}>{rowData.title}</Text>                    
+                        style={styles.hotImg} />
+                    <Text numberOfLines={2} style={styles.subjectTitle}>{rowData.title}</Text>
                 </View>
-                
+
             </TouchableWithoutFeedback>
         );
     }
@@ -360,13 +359,13 @@ export default class Discover extends React.Component {
         return (
             <View style={styles.contents}>
                 {this._getTitleBar(item)}
-                <FlatList 
+                <FlatList
                     style={styles.list}
                     renderItem={this._renderVideoItem}
                     onRefresh={this.refreshing}
                     refreshing={false}
                     horizontal={true}
-                    showsHorizontalScrollIndicator={false}                    
+                    showsHorizontalScrollIndicator={false}
                     data={item.contents}>
                 </FlatList>
             </View>
@@ -376,18 +375,18 @@ export default class Discover extends React.Component {
     _renderVideoItem = (item) => {
         let rowData = item.item;
         return (
-            <TouchableWithoutFeedback onPress={()=>{this._onItemClick(7, rowData.id)}}>
+            <TouchableWithoutFeedback onPress={() => { this._onItemClick(7, rowData.id) }}>
                 <View style={styles.videoItem}>
                     <View>
-                        <Image resizeMode={'stretch'} source={{uri:Common.baseUrl + rowData.icon}}
-                               style={styles.videoImg}/>
+                        <Image resizeMode={'stretch'} source={{ uri: Common.baseUrl + rowData.icon }}
+                            style={styles.videoImg} />
                         <Image resizeMode={'stretch'} source={require('../../images/button-play.png')}
-                               style={styles.playBtn}/>       
+                            style={styles.playBtn} />
                     </View>
                     <Text numberOfLines={2} style={[styles.name, styles.videoName]}>{rowData.description}</Text>
-                    <Text style={[styles.authorName, {color: '#828282'}]}>{rowData.author}</Text> 
+                    <Text style={[styles.authorName, { color: '#828282' }]}>{rowData.author}</Text>
                 </View>
-                
+
             </TouchableWithoutFeedback>
         );
     }
@@ -399,44 +398,44 @@ export default class Discover extends React.Component {
                     dataSource={this.state.dataSource}
                     renderPage={this._renderPage.bind(this)}
                     isLoop={true}
-                    autoPlay={true}/>
+                    autoPlay={true} />
 
             </View>
         );
     }
 
     _footer = () => {
-        return <Text style={{height:65,backgroundColor:'#ECEFF2'}}></Text>;
+        return <Text style={{ height: 65, backgroundColor: '#ECEFF2' }}></Text>;
     }
 
     _separator = () => {
-        return <View style={{height:10,backgroundColor:'#ECEFF2'}}/>;
+        return <View style={{ height: 10, backgroundColor: '#ECEFF2' }} />;
     }
 
     _viewAll = (item) => {
         const { navigate } = this.props.navigation;
         switch (item.type) {
             case 1:
-                navigate("News", {isVisible: true, title: "极客新闻", type: 1});
+                navigate("News", { isVisible: true, title: "极客新闻", type: 1 });
                 break;
             case 2:
-                this.props.main.setState({selectedTab: 'subject'})
+                this.props.main.setState({ selectedTab: 'subject' })
                 break;
             case 3:
-                navigate("Course", {isVisible: true, title: "视频课程", type: 3});
+                navigate("Course", { isVisible: true, title: "视频课程", type: 3 });
                 break;
             case 5:
-                navigate("Course", {isVisible: true, title: "精品微课", type: 5});
-               break;
+                navigate("Course", { isVisible: true, title: "精品微课", type: 5 });
+                break;
             case 4:
             case 6:
             case 7:
                 Alert.alert('', '程序小哥正在快马加鞭，敬请期待噢~');
-               break;
+                break;
         }
     }
 
-    render() {        
+    render() {
         return (
             <View styles={styles.container}>
                 <StatusBar
@@ -449,10 +448,11 @@ export default class Discover extends React.Component {
                 <View style={styles.header}>
                     <Text style={styles.headerTitle}>发现</Text>
                 </View>
-                <FlatList 
+
+                <FlatList
                     style={styles.list}
-                    ref={(flatList)=>this._flatList = flatList}
-                    keyExtractor={(item, index) => {return '' + item.type}}
+                    ref={(flatList) => this._flatList = flatList}
+                    keyExtractor={(item, index) => { return '' + item.type }}
                     ListHeaderComponent={this._header.bind(this)}
                     ListFooterComponent={this._footer}
                     ItemSeparatorComponent={this._separator}
@@ -464,8 +464,6 @@ export default class Discover extends React.Component {
                         this._onload
                     }
                     data={this.state.listData}>
-                    
-                    
                 </FlatList>
             </View>
         );
@@ -478,11 +476,11 @@ const styles = StyleSheet.create({
         // flexDirection: 'column'
     },
     header: {
-        backgroundColor:'white',
+        backgroundColor: 'white',
         width: deviceW,
         height: 55
     },
-    headerTitle : {
+    headerTitle: {
         width: deviceW,
         height: 30,
         marginTop: 25,
@@ -492,8 +490,8 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     },
     list: {
-        backgroundColor:'#ECEFF2'
-    },    
+        backgroundColor: '#ECEFF2'
+    },
     banner: {
         flex: 1,
         width: deviceW,
@@ -506,7 +504,7 @@ const styles = StyleSheet.create({
     },
     contents: {
         // marginTop: 20,
-        backgroundColor: 'white',  
+        backgroundColor: 'white',
         // flexDirection: 'column'      
     },
     titleBar: {
@@ -550,7 +548,7 @@ const styles = StyleSheet.create({
         height: 100,
         borderTopLeftRadius: 5,
         borderTopRightRadius: 5
-    },    
+    },
     subjectMask: {
         width: subjectWidth,
         height: 100,
@@ -611,7 +609,7 @@ const styles = StyleSheet.create({
         // marginLeft: 10
     },
     courseBottom: {
-        flexDirection: 'row', 
+        flexDirection: 'row',
         width: deviceW - 130
     },
     authorInfo: {
@@ -628,7 +626,7 @@ const styles = StyleSheet.create({
         borderWidth: 1
     },
     mallImg: {
-        width: mallWidth -20,
+        width: mallWidth - 20,
         height: mallWidth - 20,
         top: 10,
         left: 15
@@ -643,7 +641,7 @@ const styles = StyleSheet.create({
         left: 10
     },
     microBottom: {
-        flexDirection: 'row', 
+        flexDirection: 'row',
         width: deviceW - microWidth - 10
     },
     hotItem: {
@@ -666,12 +664,12 @@ const styles = StyleSheet.create({
         fontSize: 12
     },
     item: {
-        flex:1,
-        alignItems:'flex-start'
+        flex: 1,
+        alignItems: 'flex-start'
     },
     img: {
-        width:len,
-        height:len
+        width: len,
+        height: len
     },
     name: {
         flexWrap: 'wrap',
@@ -704,7 +702,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         width: 40,
         height: 40,
-        top: hotHeight/2 - 20,
-        left: hotWidth/2 - 20
+        top: hotHeight / 2 - 20,
+        left: hotWidth / 2 - 20
     }
 });
